@@ -1,0 +1,96 @@
+contact_book = {}
+
+def add_contact():
+    name = input("Enter Name: ").strip()
+    phone = input("Enter Phone Number: ").strip()
+    email = input("Enter Email: ").strip()
+    address = input("Enter Address: ").strip()
+
+    if name in contact_book:
+        print("Contact already exists.")
+    else:
+        contact_book[name] = {
+            'Phone': phone,
+            'Email': email,
+            'Address': address
+        }
+        print("Contact added successfully!")
+
+def view_contacts():
+    if not contact_book:
+        print("No contacts found.")
+    else:
+        print("\n--- Contact List ---")
+        for name, details in contact_book.items():
+            print(f"Name: {name}, Phone: {details['Phone']}")
+        print("---------------------")
+
+def search_contact():
+    search = input("Enter Name or Phone to search: ").strip().lower()
+    found = False
+    for name, details in contact_book.items():
+        if search in name.lower() or search in details['Phone']:
+            print(f"\nContact Found:\nName: {name}")
+            print(f"Phone: {details['Phone']}")
+            print(f"Email: {details['Email']}")
+            print(f"Address: {details['Address']}")
+            found = True
+            break
+    if not found:
+        print("No matching contact found.")
+
+def update_contact():
+    name = input("Enter the name of the contact to update: ").strip()
+    if name in contact_book:
+        print("What do you want to update?")
+        print("1. Phone\n2. Email\n3. Address")
+        choice = input("Enter your choice (1/2/3): ").strip()
+        if choice == '1':
+            contact_book[name]['Phone'] = input("Enter new phone: ")
+        elif choice == '2':
+            contact_book[name]['Email'] = input("Enter new email: ")
+        elif choice == '3':
+            contact_book[name]['Address'] = input("Enter new address: ")
+        else:
+            print("Invalid choice.")
+        print("Contact updated successfully!")
+    else:
+        print("Contact not found.")
+
+def delete_contact():
+    name = input("Enter the name of the contact to delete: ").strip()
+    if name in contact_book:
+        del contact_book[name]
+        print("Contact deleted successfully.")
+    else:
+        print("Contact not found.")
+
+def main_menu():
+    while True:
+        print("\n========== Contact Book ==========")
+        print("1. Add Contact")
+        print("2. View Contacts")
+        print("3. Search Contact")
+        print("4. Update Contact")
+        print("5. Delete Contact")
+        print("6. Exit")
+        choice = input("Enter your choice (1-6): ").strip()
+
+        if choice == '1':
+            add_contact()
+        elif choice == '2':
+            view_contacts()
+        elif choice == '3':
+            search_contact()
+        elif choice == '4':
+            update_contact()
+        elif choice == '5':
+            delete_contact()
+        elif choice == '6':
+            print("Exiting Contact Book. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Try again.")
+
+
+main_menu()
